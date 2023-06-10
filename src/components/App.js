@@ -2,17 +2,33 @@ import React, { useReducer } from 'react';
 import reducer, { initialState }from '../reducers';
 import { addOne } from '../actions';
 import { applyNumber } from '../actions';
-
+import { changeOperation } from '../actions';
 import './App.css';
-
+import { clearDisplay } from '../actions'
 import TotalDisplay from './TotalDisplay';
 import CalcButton from './CalcButton';
+import {mPlusButton, mZeroButton} from '../actions'
 
 function App() {
 const [state, dispatch] = useReducer(reducer, initialState);
 
 const applyNum = (num) => {
   dispatch(applyNumber(num))
+}
+const changeOp = operation => {
+  dispatch(changeOperation(operation))
+}
+const clearDisp = () => {
+  dispatch(clearDisplay())
+}
+const mPlus = () => {
+dispatch(mPlusButton())
+}
+const mApplied = (num) => {
+dispatch(applyNumber(num))
+}
+const mZero = () => {
+dispatch(mZeroButton())
 }
 
   return (
@@ -32,9 +48,9 @@ const applyNum = (num) => {
             </div>
             
             <div className="row">
-              <CalcButton value={"M+"}/>
-              <CalcButton value={"MR"}/>
-              <CalcButton value={"MC"}/>
+              <CalcButton value={"M+"} onClick={() => mPlus()}/>
+              <CalcButton value={"MR"} onClick={() => mApplied(state.memory)}/>
+              <CalcButton value={"MC"} onClick={() => mZero()}/>
             </div>
 
             <div className="row">
@@ -56,13 +72,13 @@ const applyNum = (num) => {
             </div>
 
             <div className="row">
-              <CalcButton value={"+"}/>
-              <CalcButton value={"*"}/>
-              <CalcButton value={"-"}/>
+              <CalcButton value={"+"} onClick={() => changeOp('+')}/>
+              <CalcButton value={"*"} onClick={() => changeOp('*')}/>
+              <CalcButton value={"-"} onClick={() => changeOp('-')}/>
             </div>
 
             <div className="row ce_button">
-              <CalcButton value={"CE"}/>
+              <CalcButton value={"CE"} onClick={() => clearDisp()}/>
             </div>
 
           </form>
